@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Frank.MarkdownEditor.App-168bcb7c-26d4-43ff-a59d-7c3728b42d19</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Frank.MarkdownEditor.Controls\Frank.MarkdownEditor.Controls.csproj" />
+        <ProjectReference Include="..\Frank.MarkdownEditor.Core\Frank.MarkdownEditor.Core.csproj" />
+    </ItemGroup>
+</Project>
