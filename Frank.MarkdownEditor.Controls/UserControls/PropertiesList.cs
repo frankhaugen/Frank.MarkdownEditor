@@ -27,5 +27,4 @@ public class PropertiesList<T> : GroupBox
         _content.Children.Clear();
         _content.Children.Add(stack);
     }
-
 }

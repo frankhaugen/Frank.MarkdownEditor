@@ -6,30 +6,30 @@ namespace Frank.MarkdownEditor.App;
 
 internal class MainWindow : Window
 {
-	private readonly ILogger<MainWindow> _logger;
-	private readonly MainGrid _mainGrid = new();
+    private readonly ILogger<MainWindow> _logger;
+    private readonly MainGrid _mainGrid = new();
 
-	public MainWindow(ILogger<MainWindow> logger)
-	{
-		_logger = logger;
+    public MainWindow(ILogger<MainWindow> logger)
+    {
+        _logger = logger;
 
-		ConfigureWindow();
+        ConfigureWindow();
 
-		Content = _mainGrid;
-	}
+        Content = _mainGrid;
+    }
 
-	private void ConfigureWindow()
-	{
-		MinWidth = 512;
-		MinHeight = 256;
+    private void ConfigureWindow()
+    {
+        MinWidth = 512;
+        MinHeight = 256;
 
-		SizeToContent = SizeToContent.WidthAndHeight;
-		WindowStartupLocation = WindowStartupLocation.CenterScreen;
-	}
+        SizeToContent = SizeToContent.WidthAndHeight;
+        WindowStartupLocation = WindowStartupLocation.CenterScreen;
+    }
 
-	protected override void OnClosing(CancelEventArgs e)
-	{
-		_logger.LogInformation("Closing");
-		base.OnClosing(e);
-	}
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        _logger.LogInformation("Closing");
+        base.OnClosing(e);
+    }
 }

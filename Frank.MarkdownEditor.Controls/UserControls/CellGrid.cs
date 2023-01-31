@@ -15,6 +15,7 @@ public class CellGrid : Grid
         {
             ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
         }
+
         for (var i = 0; i < rows; i++)
         {
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });

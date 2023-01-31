@@ -32,12 +32,12 @@ public class ScriptingComponent : IScriptingComponent
         _panel.Children.Add(_button);
         _panel.Children.Add(_editor);
     }
-        
+
     private ScriptOptions CreateScriptOptions() =>
         ScriptOptions.Default
             .AddReferences(GetType().Assembly)
             .AddImports(
-                "System.Text.Json", 
+                "System.Text.Json",
                 "Company.IntegrationEngine.Plugin.Models.Invoices"
             );
 

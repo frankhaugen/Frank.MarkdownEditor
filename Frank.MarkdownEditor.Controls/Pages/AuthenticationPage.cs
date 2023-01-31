@@ -41,7 +41,6 @@ public class AuthenticationPage : Page
     //public void RegisterAuthenticationCallback()
 
 
-
     private async void ButtonOnClick(object sender, RoutedEventArgs e)
     {
         _logger.LogInformation("Authenticating");

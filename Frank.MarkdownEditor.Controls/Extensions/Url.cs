@@ -70,6 +70,7 @@ public class Url : IUrl
         {
             url += "?" + _parametersBuilder;
         }
+
         return url;
     }
 }

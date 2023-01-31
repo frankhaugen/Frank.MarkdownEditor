@@ -20,6 +20,7 @@ public static class ListExtensions
         {
             source.Append(value);
         }
+
         return source;
     }
 }

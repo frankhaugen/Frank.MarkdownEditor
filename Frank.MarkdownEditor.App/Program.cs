@@ -1,6 +1,6 @@
+using Frank.MarkdownEditor.App.Extensions;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Frank.MarkdownEditor.App.Extensions;
 
 namespace Frank.MarkdownEditor.App;
 
@@ -24,7 +24,6 @@ internal class Program
             .Build();
 
         host.Run();
-
     }
 
     [DllImport("kernel32")]

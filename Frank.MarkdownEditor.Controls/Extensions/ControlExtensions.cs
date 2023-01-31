@@ -6,7 +6,6 @@ namespace Frank.MarkdownEditor.Controls.Extensions;
 
 public static class ControlExtensions
 {
-
     public static void SetGridPosition<T>(this T control, int x, int y) where T : Control
     {
         Grid.SetColumn(control, x);
@@ -72,5 +71,4 @@ public static class ControlExtensions
     }
 
     public static T GetDecendantById<TSource, T>(this TSource obj, Guid id) where TSource : Control where T : Control => obj.GetDecendants<T>().FirstOrDefault(x => x.HasId(id));
-
 }

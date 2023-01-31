@@ -25,7 +25,6 @@ public static class StringExtensionsff
         source = firstCharacter + source;
 
 
-
         return source;
     }
 

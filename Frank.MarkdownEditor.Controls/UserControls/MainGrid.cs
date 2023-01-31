@@ -10,11 +10,11 @@ public class MainGrid : Grid
     private readonly GroupBox _treeGroupBox;
     private readonly GroupBox _editorGroupBox;
     private readonly GroupBox _priviewGroupBox;
-    
+
     public MainGrid()
     {
         this.GenerateGridRowsAndColumns(1, 3);
-        
+
         _treeGroupBox = new GroupBox()
         {
             Name = "Tree",
@@ -33,7 +33,7 @@ public class MainGrid : Grid
             Header = "Preview",
             Background = System.Windows.Media.Brushes.Beige
         };
-        
+
         this.AddChild(_treeGroupBox, 0, 0);
         this.AddChild(_editorGroupBox, 0, 1);
         this.AddChild(_priviewGroupBox, 0, 2);
@@ -42,8 +42,5 @@ public class MainGrid : Grid
         {
             Content = new ScriptingPage(new ScriptingComponent())
         };
-        
-        
     }
-
 }
