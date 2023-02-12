@@ -5,5 +5,11 @@ namespace Frank.MarkdownEditor.Controls.Pages;
 
 public class ScriptingPage : Page
 {
-    public ScriptingPage(IScriptingComponent scriptingComponent) => Content = scriptingComponent.GetPanel();
+    public ScriptingPage(IScriptingComponent scriptingComponent)
+    {
+        
+        HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+        Content = scriptingComponent.GetPanel();
+    }
 }

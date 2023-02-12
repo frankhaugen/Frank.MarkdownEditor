@@ -12,13 +12,12 @@ public class MainWindow : Window
     private readonly ILogger<MainWindow> _logger;
     private readonly CellGrid _grid;
 
-    public MainWindow(ILogger<MainWindow> logger, AuthenticationPage authenticationPage, InvoicePreviewPage invoicePreviewPage, ControlPanelPage controlPanelPage)
+    public MainWindow(ILogger<MainWindow> logger, InvoicePreviewPage invoicePreviewPage)
     {
         _logger = logger;
 
         _grid = new CellGrid(3, 3);
 
-        _grid.SetCellContent(0, 0, controlPanelPage);
         _grid.SetCellContent(0, 1, invoicePreviewPage);
 
         ConfigureWindow();

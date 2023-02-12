@@ -1,4 +1,7 @@
 using Frank.MarkdownEditor.App.Extensions;
+using Frank.MarkdownEditor.Controls.Contexts;
+using Frank.MarkdownEditor.Controls.Pages;
+using Frank.MarkdownEditor.Controls.UserControls;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -17,6 +20,13 @@ internal class Program
                 context.SetContentPathToApplicationDirectory();
 
                 services.AddScoped<Application>();
+                
+                services.AddScoped<MainGrid>();
+                services.AddScoped<FileContext>();
+                
+                services.AddScoped<TreePage>();
+                services.AddScoped<PreviewPage>();
+                services.AddScoped<RoslynPadPage>();
 
                 services.AddScoped<MainWindow>();
                 services.AddHostedService<WindowHost>();

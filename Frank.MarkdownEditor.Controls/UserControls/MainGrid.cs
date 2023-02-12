@@ -11,7 +11,7 @@ public class MainGrid : Grid
     private readonly GroupBox _editorGroupBox;
     private readonly GroupBox _priviewGroupBox;
 
-    public MainGrid()
+    public MainGrid(TreePage treePage, RoslynPadPage roslynPadPage, PreviewPage previewPage)
     {
         this.GenerateGridRowsAndColumns(1, 3);
 
@@ -31,8 +31,20 @@ public class MainGrid : Grid
         {
             Name = "Preview",
             Header = "Preview",
-            Background = System.Windows.Media.Brushes.Beige
+            Background = System.Windows.Media.Brushes.Beige,
         };
+        
+        _priviewGroupBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        _priviewGroupBox.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+        
+        _editorGroupBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        _editorGroupBox.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+        
+        _treeGroupBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        _treeGroupBox.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+
+        HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
 
         this.AddChild(_treeGroupBox, 0, 0);
         this.AddChild(_editorGroupBox, 0, 1);
@@ -40,7 +52,15 @@ public class MainGrid : Grid
 
         _editorGroupBox.Content = new Frame()
         {
-            Content = new ScriptingPage(new ScriptingComponent())
+            Content = roslynPadPage,
+        };
+        _priviewGroupBox.Content = new Frame()
+        {
+            Content = roslynPadPage
+        };
+        _treeGroupBox.Content = new Frame()
+        {
+            Content = treePage
         };
     }
 }

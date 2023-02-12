@@ -7,14 +7,18 @@ namespace Frank.MarkdownEditor.App;
 internal class MainWindow : Window
 {
     private readonly ILogger<MainWindow> _logger;
-    private readonly MainGrid _mainGrid = new();
+    private readonly MainGrid _mainGrid;
 
-    public MainWindow(ILogger<MainWindow> logger)
+    public MainWindow(ILogger<MainWindow> logger, MainGrid mainGrid)
     {
         _logger = logger;
+        _mainGrid = mainGrid;
 
         ConfigureWindow();
-
+        
+        _mainGrid.Width = Width;
+        _mainGrid.Height = Height;
+        
         Content = _mainGrid;
     }
 
@@ -22,6 +26,8 @@ internal class MainWindow : Window
     {
         MinWidth = 512;
         MinHeight = 256;
+
+        Title = "Markdown Editor";
 
         SizeToContent = SizeToContent.WidthAndHeight;
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
