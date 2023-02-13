@@ -1,7 +1,8 @@
+using Frank.MarkdownEditor.Controls.Contexts;
 using System.Globalization;
 using System.IO;
 
-namespace Frank.MarkdownEditor.Controls.Contexts;
+namespace Frank.MarkdownEditor.Controls.Extensions;
 
 public static partial class FileInfoExtensions
 {

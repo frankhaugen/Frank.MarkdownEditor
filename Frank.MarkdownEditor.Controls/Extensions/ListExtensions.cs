@@ -14,13 +14,4 @@ public static class ListExtensions
 
     public static void Then<T>(this T source, Action action) => action.Invoke();
 
-    public static IEnumerable<T> Append<T>(this IEnumerable<T> source, IEnumerable<T> values)
-    {
-        foreach (var value in values)
-        {
-            source.Append(value);
-        }
-
-        return source;
-    }
 }

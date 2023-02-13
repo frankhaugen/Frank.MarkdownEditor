@@ -11,46 +11,29 @@ public static class DependencyObjectExtensions
     public static IEnumerable<T> GetDecendants<T>(this DependencyObject obj) where T : DependencyObject
     {
         for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-        {
             foreach (var child in GetDecendants<T>(VisualTreeHelper.GetChild(obj, i)))
-            {
-                if (child is T result)
-                {
-                    yield return result;
-                }
-            }
-        }
+                if (child is T)
+                    yield return child;
     }
 
     public static IEnumerable<T> GetAllChildren<T>(DependencyObject depObj) where T : DependencyObject
     {
-        if (depObj != null)
+        if (depObj == null) yield break;
+        var depObjCount = VisualTreeHelper.GetChildrenCount(depObj);
+        for (var i = 0; i < depObjCount; i++)
         {
-            int depObjCount = VisualTreeHelper.GetChildrenCount(depObj);
-            for (int i = 0; i < depObjCount; i++)
+            var child = VisualTreeHelper.GetChild(depObj, i);
+            if (child is T dependencyObject)
+                yield return dependencyObject;
+            
+            if (child is GroupBox { Content: T o })
             {
-                DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                if (child != null && child is T)
-                {
-                    yield return (T)child;
-                }
-
-                if (child is GroupBox)
-                {
-                    GroupBox gb = child as GroupBox;
-                    Object gpchild = gb.Content;
-                    if (gpchild is T)
-                    {
-                        yield return (T)child;
-                        child = gpchild as T;
-                    }
-                }
-
-                foreach (T childOfChild in GetAllChildren<T>(child))
-                {
-                    yield return childOfChild;
-                }
+                yield return (T)child;
+                child = o;
             }
+
+            foreach (var childOfChild in GetAllChildren<T>(child))
+                yield return childOfChild;
         }
     }
 
@@ -69,44 +52,36 @@ public static class DependencyObjectExtensions
     {
         // Confirm parent and childName are valid. 
         if (parent == null)
-        {
             return null;
-        }
 
         T foundChild = null;
 
-        int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-        for (int i = 0; i < childrenCount; i++)
+        var childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+        for (var i = 0; i < childrenCount; i++)
         {
             var child = VisualTreeHelper.GetChild(parent, i);
             // If the child is not of the request child type child
-            T childType = child as T;
-            if (childType == null)
+            if (child is not T childType)
             {
                 // recursively drill down the tree
                 foundChild = FindChild<T>(child, childName);
 
                 // If the child is found, break so we do not overwrite the found child. 
                 if (foundChild != null)
-                {
                     break;
-                }
             }
             else if (!string.IsNullOrEmpty(childName))
             {
-                var frameworkElement = child as FrameworkElement;
                 // If the child's name is set for search
-                if (frameworkElement != null && frameworkElement.Name == childName)
-                {
-                    // if the child's name is of the request name
-                    foundChild = (T)child;
-                    break;
-                }
+                if (childType is not FrameworkElement frameworkElement || frameworkElement.Name != childName) continue;
+                // if the child's name is of the request name
+                foundChild = childType;
+                break;
             }
             else
             {
                 // child element found.
-                foundChild = (T)child;
+                foundChild = childType;
                 break;
             }
         }

@@ -1,4 +1,5 @@
-﻿using Frank.MarkdownEditor.Controls.UserControls;
+﻿using Frank.MarkdownEditor.Controls.Contexts;
+using Markdig;
 using System.Windows.Controls;
 
 namespace Frank.MarkdownEditor.Controls.Pages;
@@ -6,14 +7,23 @@ namespace Frank.MarkdownEditor.Controls.Pages;
 public class PreviewPage : Page
 {
     private readonly WebBrowser _browser = new();
+    private readonly FileContext _fileContext;
 
-    public PreviewPage()
+    public PreviewPage(FileContext fileContext)
     {
-        _browser.Source = new(@"C:\repos\frankhaugen\Frank.MarkdownEditor\Frank.MarkdownEditor.App\preview.html");
+        _fileContext = fileContext;
+        _fileContext.SelectedChanged += FileContextOnSelectedChanged;   
         Content = _browser;
-        
-        HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-        VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+    }
+
+    private void FileContextOnSelectedChanged(FileMetadata obj) => UpdatePreview(obj);
+
+    public void UpdatePreview(FileMetadata file)
+    {
+        if (file is null) return;
+        var markdown = file.ReadAllTextAsync().GetAwaiter().GetResult();
+        var html = Markdown.ToHtml(markdown);
+        _browser.NavigateToString(html);
     }
 
 }

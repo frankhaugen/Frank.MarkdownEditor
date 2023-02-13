@@ -18,17 +18,33 @@ public class RoslynPadPage : Page
         _roslynPadControl = new RoslynPad.Editor.RoslynCodeEditor() { };
         
         _fileContext.SelectedChanged += FileContextOnSelectedChanged;
+        _roslynPadControl.TextChanged += RoslynPadControlOnTextChanged;
             
-        HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-        VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
         Content = _roslynPadControl;
+    }
+
+    private void RoslynPadControlOnTextChanged(object? sender, EventArgs e)
+    {
+        if (CurrentFile is null) return;
+        Task.Run(() => _fileContext.Content = _roslynPadControl.Text);
+        
+        Save();
     }
 
     private void FileContextOnSelectedChanged(FileMetadata obj)
     {
+        if (obj is null) return;
         CurrentFile = obj;
-        _roslynPadControl.Text = CurrentFile.ReadAllTextAsync().GetAwaiter().GetResult();
+        _roslynPadControl.Text = _fileContext.Content;
     }
     
     public FileMetadata CurrentFile { get; private set; }
+    
+    public void Save()
+    {
+        if (CurrentFile is null) return;
+        _fileContext.Save();
+    }
+    
+    
 }

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Frank.MarkdownEditor.Controls.Contexts;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Frank.MarkdownEditor.Controls.Contexts;
+namespace Frank.MarkdownEditor.Controls.Extensions;
 
 // ReSharper disable once InconsistentNaming
 public  static partial class FileInfoExtensions
@@ -16,13 +17,13 @@ public  static partial class FileInfoExtensions
     {
         try
         {
-            locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value 
+            // locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value 
             file.Directory?.Create();
             await File.WriteAllTextAsync(file.FullName, text);
         }
         finally
         {
-            locker.ReleaseWriterLock();
+            // locker.ReleaseWriterLock();
         }
     }
     
@@ -30,13 +31,13 @@ public  static partial class FileInfoExtensions
     {
         try
         {
-            locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value 
+            // locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value 
             file.Directory?.Create();
             await File.AppendAllTextAsync(file.FullName, text);
         }
         finally
         {
-            locker.ReleaseWriterLock();
+            // locker.ReleaseWriterLock();
         }
     }
     
@@ -44,14 +45,14 @@ public  static partial class FileInfoExtensions
     {
         try
         {
-            locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value 
+            // locker.AcquireWriterLock(int.MaxValue); //You might wanna change timeout value 
             file.Directory?.Create();
             var json = JsonSerializer.Serialize(obj, JsonOptions.FileDefault);
             await File.WriteAllTextAsync(file.FullName, json);
         }
         finally
         {
-            locker.ReleaseWriterLock();
+            // locker.ReleaseWriterLock();
         }
     }
     
@@ -59,12 +60,12 @@ public  static partial class FileInfoExtensions
     {
         try
         {
-            locker.AcquireReaderLock(int.MaxValue);
+            // locker.AcquireReaderLock(10_000);
             return await File.ReadAllTextAsync(file.FullName, cancellationToken);
         }
         finally
         {
-            locker.ReleaseReaderLock();
+            // locker.ReleaseReaderLock();
         }
     }
     
@@ -72,12 +73,12 @@ public  static partial class FileInfoExtensions
     {
         try
         {
-            locker.AcquireReaderLock(int.MaxValue);
+            // locker.AcquireReaderLock(int.MaxValue);
             return await File.ReadAllLinesAsync(file.FullName, cancellationToken);
         }
         finally
         {
-            locker.ReleaseReaderLock();
+            // locker.ReleaseReaderLock();
         }
     }
     
@@ -85,13 +86,13 @@ public  static partial class FileInfoExtensions
     {
         try
         {
-            locker.AcquireReaderLock(int.MaxValue);
+            // locker.AcquireReaderLock(int.MaxValue);
             var json = await File.ReadAllTextAsync(file.FullName, cancellationToken);
             return JsonSerializer.Deserialize<T>(json, JsonOptions.FileDefault);
         }
         finally
         {
-            locker.ReleaseReaderLock();
+            // locker.ReleaseReaderLock();
         }
     }
 }

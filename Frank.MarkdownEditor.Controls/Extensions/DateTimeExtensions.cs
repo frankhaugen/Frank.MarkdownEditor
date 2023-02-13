@@ -6,8 +6,8 @@ namespace Frank.MarkdownEditor.Controls.Contexts;
 
 public static class DateTimeExtensions
 {
-    public static YearWeeksDirectoryAndFiles GetYearWeeksDirectoryAndFiles(this DateTime dateTime, DirectoryInfo baseDirectory) => new(dateTime.Year, baseDirectory);
-    public static YearWeeksDirectoryAndFiles GetYearWeeksDirectoryAndFiles(this DateOnly date, DirectoryInfo baseDirectory) => new(date.Year, baseDirectory);
+    public static YearWeeksContext GetYearWeeksDirectoryAndFiles(this DateTime dateTime, DirectoryInfo baseDirectory) => new(dateTime.Year, baseDirectory);
+    public static YearWeeksContext GetYearWeeksDirectoryAndFiles(this DateOnly date, DirectoryInfo baseDirectory) => new(date.Year, baseDirectory);
     
     public static int GetWeekInYear(this DateTime dateTime) => ISOWeek.GetWeekOfYear(dateTime);
     public static int GetWeekInYear(this DateOnly date) => ISOWeek.GetWeekOfYear(date.ToDateTime());
@@ -22,11 +22,4 @@ public static class DateTimeExtensions
     public static FileInfo CreateFileInfoForDate(this DateOnly date, DirectoryInfo baseDirectory, string extension) => new FileInfo(Path.Combine(baseDirectory.FullName, date.Year.ToString(), date.Month.ToString("00"),date.CreateFileNameForDate(extension)));
     
     public static DateTime ToDateTime(this DateOnly date) => date.ToDateTime(TimeOnly.MinValue);
-}
-
-public static class YearWeekDayExtensions
-{
-    public static string CreateFileName(this YearWeekDay yearWeekDay, string extension) => $"{yearWeekDay} {yearWeekDay.Day}.{extension.TrimStart('.')}";
-    public static FileInfo CreateFileInfo(this YearWeekDay yearWeekDay, DirectoryInfo directory, string extension) => new(Path.Combine(directory.FullName,yearWeekDay.CreateFileName(extension)));
-
 }

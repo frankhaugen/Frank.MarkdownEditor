@@ -19,6 +19,26 @@ internal class Program
             {
                 context.SetContentPathToApplicationDirectory();
 
+                var window = new WindowContext
+                {
+                    Name = "Markdown Editor",
+                    Title = "Markdown Editor",
+                    ClassName = "MarkdownEditor",
+                    Size = new Size(800, 600),
+                    Location = new Point(0, 0),
+                    WindowState = WindowState.Normal,
+                    OwnerScreen = new ScreenContext
+                    {
+                        Name = "Screen 1",
+                        DeviceName = "\\\\.\\DISPLAY1",
+                        Primary = true,
+                        Size = new Size(1920, 1080),
+                        Location = new Point(0, 0)
+                    }
+                };
+                
+                services.AddSingleton<WindowContext>(window);
+                
                 services.AddScoped<Application>();
                 
                 services.AddScoped<MainGrid>();

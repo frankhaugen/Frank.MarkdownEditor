@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Frank.MarkdownEditor.Controls.Extensions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace Frank.MarkdownEditor.Controls.Contexts;
 
@@ -51,17 +50,32 @@ public class FileContext
         }
     }
     
-    public FileMetadata Selected { get; set; }
-    public event Action<FileMetadata> SelectedChanged;
+    public FileMetadata Selected { get; private set; }
     
-    public void Select(FileMetadata file)
+    public string Content { get; set; } = string.Empty;
+
+    public event Action<FileMetadata> SelectedChanged;
+    public event Action<FileMetadata> Saved;
+    
+    public async Task Select(FileMetadata file)
     {
+        if (file is null || file == Selected) return;
         Selected = file;
-        SelectedChanged(file);
+        Content = await Selected.ReadAllTextAsync();
+        SelectedChanged.Invoke(file);
     }
-
-    public IEnumerable<FileMetadata> GetFiles() => DataDirectory.EnumerateFiles("*.md", SearchOption.AllDirectories).Select(f => f.GetMetadata());
-
+    
+    public void Save()
+    {
+        if (Selected is not null)
+        {
+            Selected.WriteAllTextAsync(Content).GetAwaiter().GetResult();
+            Saved.Invoke(Selected);
+        }
+    }
+    
+    public Dictionary<YearWeekDay, FileMetadata> GetDictionary() => DateTime.Today.GetYearWeeksDirectoryAndFiles(FileDirectory).CreateFilesForYearWithDictionary("md");
+    
     public IEnumerable<FileMetadata> SetupFiles()
     {
         var setupContext = DateTime.Today.GetYearWeeksDirectoryAndFiles(FileDirectory);

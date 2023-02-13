@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Frank.MarkdownEditor.Controls.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -6,9 +7,9 @@ using System.Linq;
 
 namespace Frank.MarkdownEditor.Controls.Contexts;
 
-public class YearWeeksDirectoryAndFiles
+public class YearWeeksContext
 {
-    public YearWeeksDirectoryAndFiles(int year, DirectoryInfo baseDirectory)
+    public YearWeeksContext(int year, DirectoryInfo baseDirectory)
     {
         Year = year;
         WeeksInYear = ISOWeek.GetWeeksInYear(year);
@@ -20,6 +21,21 @@ public class YearWeeksDirectoryAndFiles
     public int WeeksInYear { get; }
     public DirectoryInfo BaseDirectory { get; }
     public DirectoryInfo YearDirectory { get; } 
+
+    public Dictionary<YearWeekDay, FileMetadata> CreateFilesForYearWithDictionary(string extension)
+    {
+        var dictionary = new Dictionary<YearWeekDay, FileMetadata>();
+        
+        foreach (var week in Enumerable.Range(1, WeeksInYear))
+        foreach (var day in Enum.GetValues<DayOfWeek>())
+        {
+            var yearWeekDay = new YearWeekDay() { Year = Year, Week = week, Day = day };
+            var file = CreateFileForDay(yearWeekDay, extension);
+            dictionary.Add(yearWeekDay, file.GetMetadata());
+        }
+
+        return dictionary;
+    }
     
     public DirectoryInfo CreateDirectoryForWeek(YearWeek yearWeek) => new DirectoryInfo(Path.Combine(YearDirectory.FullName, yearWeek.Week.ToString("00")));
 
