@@ -36,11 +36,11 @@ public class TreePage : Page
         Content = _stackPanel;
     }
     
-    private void BuildTreeView()
+    private async void BuildTreeView()
     {
         _treeView.Items.Clear();
         
-        var files = _fileContext.GetDictionary();
+        var files = FileContext.GetDictionary();
         
         var yearGroups = files.Keys.GroupBy(x => x.Year);
 
@@ -69,8 +69,6 @@ public class TreePage : Page
                         Header = file!.DisplayName,
                     };
 
-                    item.Selected += ItemOnSelected;
-                    
                     weekItem.Items.Add(item);
                 }
                 
@@ -78,28 +76,26 @@ public class TreePage : Page
             }
             _treeView.Items.Add(yearItem);
         }
+        
+        _treeView.SelectedItemChanged += TreeViewOnSelectedItemChanged;
     }
 
-    private void ItemOnSelected(object sender, RoutedEventArgs e)
+    private async void TreeViewOnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-        if (sender is not TreeViewItem item) return;
-        if (item.Header is not string header) return;
+        if (_treeView.SelectedItem is not TreeViewItem item) return;
         
-        var files = _fileContext.GetDictionary();
-        var file = files.Values.FirstOrDefault(x => x!.DisplayName == header);
+        var files = FileContext.GetDictionary();
+        var file = files.Values.FirstOrDefault(x => x!.DisplayName == item.Header.ToString());
         if (file is null) return;
         
-        _fileContext.Select(file).GetAwaiter().GetResult();
+        await _fileContext.Select(file);
     }
 
-    private void BuildMenuItems()
-    {
-        BuildRefreshMenuItem();
-    }
+    private async void BuildMenuItems() => BuildRefreshMenuItem();
 
-    private void BuildRefreshMenuItem() => BuildMenuItem("Refresh", IconChar.Sync, (sender, args) => BuildTreeView());
+    private async void BuildRefreshMenuItem() => BuildMenuItem("Refresh", IconChar.Sync, (sender, args) => BuildTreeView());
 
-    private void BuildMenuItem(string header, IconChar icon, Action<object, RoutedEventArgs> action)
+    private async void BuildMenuItem(string header, IconChar icon, Action<object, RoutedEventArgs> action)
     {
         var item = new MenuItem()
         {

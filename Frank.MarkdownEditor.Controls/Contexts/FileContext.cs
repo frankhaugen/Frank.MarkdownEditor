@@ -23,7 +23,7 @@ public class FileContext
         Setup();
     }
 
-    private void Setup()
+    private async void Setup()
     {
         // Directories
         if (!Root.Exists) Root.Create();
@@ -45,7 +45,7 @@ public class FileContext
             {
                 var fileHeader = $"# {file.DisplayName.Replace(".md", "")}";
                 _logger.LogInformation($"Creating file {file.DisplayName} with header {fileHeader}");
-                file.WriteAllTextAsync(fileHeader);
+                await file.WriteAllTextAsync(fileHeader);
             }
         }
     }
@@ -65,31 +65,34 @@ public class FileContext
         SelectedChanged.Invoke(file);
     }
     
-    public void Save()
+    public async Task<bool> Save()
     {
         if (Selected is not null)
         {
-            Selected.WriteAllTextAsync(Content).GetAwaiter().GetResult();
+            Content = await Selected.ReadAllTextAsync();
+            await Selected.WriteAllTextAsync(Content);
             Saved.Invoke(Selected);
         }
+
+        return true;
     }
     
-    public Dictionary<YearWeekDay, FileMetadata> GetDictionary() => DateTime.Today.GetYearWeeksDirectoryAndFiles(FileDirectory).CreateFilesForYearWithDictionary("md");
+    public static Dictionary<YearWeekDay, FileMetadata> GetDictionary() => DateTime.Today.GetYearWeeksDirectoryAndFiles(FileDirectory).CreateFilesForYearWithDictionary("md");
     
-    public IEnumerable<FileMetadata> SetupFiles()
+    public static IEnumerable<FileMetadata> SetupFiles()
     {
         var setupContext = DateTime.Today.GetYearWeeksDirectoryAndFiles(FileDirectory);
         var files = setupContext.CreateFilesForYear("md");
         return files.Select(f => f.GetMetadata());
     }
     
-    public async Task<Settings> GetSettingsAsync()
+    public static async Task<Settings> GetSettingsAsync()
     {
         var json = await SettingsFile.ReadAllTextAsync();
         return Settings.FromJson(json);
     }
     
-    public async Task SaveSettingsAsync(Settings settings)
+    public static async Task SaveSettingsAsync(Settings settings)
     {
         var json = settings.ToJson();
         await SettingsFile.WriteAllTextAsync(json);

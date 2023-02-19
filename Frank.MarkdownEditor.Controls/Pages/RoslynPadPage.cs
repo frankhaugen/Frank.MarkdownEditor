@@ -10,7 +10,6 @@ public class RoslynPadPage : Page
     private readonly FileContext _fileContext;
     private readonly RoslynPad.Editor.RoslynCodeEditor _roslynPadControl;
     
-    
     public RoslynPadPage(FileContext fileContext)
     {
         _fileContext = fileContext;
@@ -23,15 +22,14 @@ public class RoslynPadPage : Page
         Content = _roslynPadControl;
     }
 
-    private void RoslynPadControlOnTextChanged(object? sender, EventArgs e)
+    private async void RoslynPadControlOnTextChanged(object? sender, EventArgs e)
     {
         if (CurrentFile is null) return;
-        Task.Run(() => _fileContext.Content = _roslynPadControl.Text);
-        
-        Save();
+        _fileContext.Content = _roslynPadControl.Text;
+        await Save();
     }
 
-    private void FileContextOnSelectedChanged(FileMetadata obj)
+    private async void FileContextOnSelectedChanged(FileMetadata obj)
     {
         if (obj is null) return;
         CurrentFile = obj;
@@ -40,11 +38,9 @@ public class RoslynPadPage : Page
     
     public FileMetadata CurrentFile { get; private set; }
     
-    public void Save()
+    public async Task Save()
     {
         if (CurrentFile is null) return;
-        _fileContext.Save();
+        await _fileContext.Save();
     }
-    
-    
 }

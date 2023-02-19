@@ -9,7 +9,7 @@ public class MainGrid : Grid
 {
     private readonly WindowContext _window;
     
-    public MainGrid(TreePage treePage, RoslynPadPage roslynPadPage, PreviewPage previewPage, WindowContext window)
+    public MainGrid(TreePage treePage, RoslynPadPage roslynPadPage, MarkdownPreviewPage previewPage, WindowContext window)
     {
         _window = window;
         this.GenerateGridRowsAndColumns(1, 3);

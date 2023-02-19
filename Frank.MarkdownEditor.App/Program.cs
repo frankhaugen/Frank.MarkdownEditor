@@ -45,7 +45,7 @@ internal class Program
                 services.AddScoped<FileContext>();
                 
                 services.AddScoped<TreePage>();
-                services.AddScoped<PreviewPage>();
+                services.AddScoped<MarkdownPreviewPage>();
                 services.AddScoped<RoslynPadPage>();
 
                 services.AddScoped<MainWindow>();
