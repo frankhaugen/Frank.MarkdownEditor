@@ -1,8 +1,10 @@
 using Frank.MarkdownEditor.App.Extensions;
 using Frank.MarkdownEditor.Controls.Contexts;
+using Frank.MarkdownEditor.Controls.Models;
 using Frank.MarkdownEditor.Controls.Pages;
 using Frank.MarkdownEditor.Controls.UserControls;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics.X86;
 using System.Windows;
 
 namespace Frank.MarkdownEditor.App;
@@ -36,6 +38,8 @@ internal class Program
                         Location = new Point(0, 0)
                     }
                 };
+
+                services.Configure<Setup>(context.Configuration.GetSection(nameof(Setup)));
                 
                 services.AddSingleton<WindowContext>(window);
                 
@@ -49,6 +53,7 @@ internal class Program
                 services.AddScoped<RoslynPadPage>();
 
                 services.AddScoped<MainWindow>();
+                services.AddScoped<LogWindow>();
                 services.AddHostedService<WindowHost>();
             })
             .Build();

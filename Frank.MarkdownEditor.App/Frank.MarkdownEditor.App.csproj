@@ -8,17 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoFixture" Version="4.17.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Frank.MarkdownEditor.Controls\Frank.MarkdownEditor.Controls.csproj" />
         <ProjectReference Include="..\Frank.MarkdownEditor.Core\Frank.MarkdownEditor.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="preview.html">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
     </ItemGroup>
 </Project>
