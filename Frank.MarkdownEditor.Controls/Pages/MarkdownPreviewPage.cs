@@ -1,19 +1,19 @@
 ﻿using Frank.MarkdownEditor.Controls.Contexts;
 using System.Windows.Controls;
+using Frank.MarkdownEditor.Controls.UserControls.Markdown;
 
 namespace Frank.MarkdownEditor.Controls.Pages;
 
 public class MarkdownPreviewPage : Page
 {
     private readonly FileContext _fileContext;
-    private readonly Markdig.Wpf.MarkdownViewer _viewer = new();
-
+    private readonly WebBrowser _viewer = new();
+    
     public MarkdownPreviewPage(FileContext fileContext)
     {
         _fileContext = fileContext;
         _fileContext.SelectedChanged += FileContextOnSelectedChanged;
         _fileContext.Saved += FileContextOnSaved;
-        _viewer.Markdown = "# Hello World";
         
         Content = _viewer;
     }
@@ -30,6 +30,7 @@ public class MarkdownPreviewPage : Page
     {
         if (file is null) return;
         var markdown = await file.ReadAllTextAsync();
-        _viewer.Markdown = markdown;
+        var html = Markdig.Markdown.ToHtml(markdown);
+        _viewer.NavigateToString(html);
     }
 }

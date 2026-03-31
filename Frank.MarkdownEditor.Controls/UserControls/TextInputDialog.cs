@@ -44,8 +44,3 @@ public class TextInputDialog : Window
     }
     
 }
-
-public class TextDialogContext
-{
-    public string Text { get; set; }
-}

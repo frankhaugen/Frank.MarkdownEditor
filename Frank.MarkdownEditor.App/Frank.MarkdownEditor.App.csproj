@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
         <Nullable>enable</Nullable>
-        <TargetFramework>net7.0-windows</TargetFramework>
+        <TargetFramework>net10.0-windows</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>dotnet-Frank.MarkdownEditor.App-168bcb7c-26d4-43ff-a59d-7c3728b42d19</UserSecretsId>
     </PropertyGroup>

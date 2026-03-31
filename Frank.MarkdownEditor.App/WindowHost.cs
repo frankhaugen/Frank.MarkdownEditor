@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows;
+using Frank.MarkdownEditor.App.Windows;
 
 namespace Frank.MarkdownEditor.App;
 
@@ -19,7 +20,9 @@ internal class WindowHost : BackgroundService
         _logger.LogInformation("Starting");
 
         using var scope = _serviceProvider.CreateScope();
-        var window = scope.ServiceProvider.GetRequiredService<LogWindow>();
+        var window = scope.ServiceProvider.GetRequiredService<MarkdownWindow>();
+        // var window = scope.ServiceProvider.GetRequiredService<GitWindow>();
+        // var window = scope.ServiceProvider.GetRequiredService<LogWindow>();
         // var window = scope.ServiceProvider.GetRequiredService<MainWindow>();
         var app = scope.ServiceProvider.GetRequiredService<Application>();
 

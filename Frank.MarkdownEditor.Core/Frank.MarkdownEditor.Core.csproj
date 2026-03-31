@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -9,5 +9,22 @@
     <ItemGroup>
         <ProjectReference Include="..\Frank.MarkdownEditor.Models\Frank.MarkdownEditor.Models.csproj"/>
     </ItemGroup>
+
+
+
+    <ItemGroup>
+      <PackageReference Include="LibGit2Sharp" Version="0.27.2" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+    </ItemGroup>
+
+
+
+
+
+
+
+
+
 
 </Project>

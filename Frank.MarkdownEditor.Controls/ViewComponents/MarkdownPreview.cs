@@ -1,11 +1,11 @@
-﻿using Markdig.Wpf;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using Frank.MarkdownEditor.Controls.UserControls.Markdown;
 
 namespace Frank.MarkdownEditor.Controls.ViewComponents;
 
 public class MarkdownPreview : TabItem
 {
-    private readonly MarkdownViewer _markdownViewer = new();
+    private readonly WebBrowser _markdownViewer = new();
     private readonly ICodeContent _codeContent;
     
     public MarkdownPreview(ICodeContent codeContent)
@@ -30,9 +30,5 @@ public class MarkdownPreview : TabItem
         };
     }
 
-    public string Markdown
-    {
-        get => _markdownViewer.Markdown;
-        set => _markdownViewer.Markdown = value;
-    }
+    public string Markdown { get; set; }
 }
