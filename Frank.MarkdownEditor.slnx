@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Frank.MarkdownEditor.App/Frank.MarkdownEditor.App.csproj" />
+  <Project Path="Frank.MarkdownEditor.Controls/Frank.MarkdownEditor.Controls.csproj" />
+  <Project Path="Frank.MarkdownEditor.Core/Frank.MarkdownEditor.Core.csproj" />
+  <Project Path="Frank.MarkdownEditor.Models/Frank.MarkdownEditor.Models.csproj" />
+  <Project Path="Frank.MarkdownEditor.Tests/Frank.MarkdownEditor.Tests.csproj" />
+</Solution>
